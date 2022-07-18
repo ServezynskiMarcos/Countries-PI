@@ -1,0 +1,12 @@
+.parent {
+display: grid;
+grid-template-areas:
+    'header header header'
+    'main main main'
+    'footer footer footer ';
+}
+.div1 { grid-area: header; background-color: whitesmoke;}
+.div2 { grid-area: main;}
+.div3 { grid-area: 3 / 2 / 4 / 5; }
+.div4 { grid-area: 4 / 2 / 5 / 5; }
+

@@ -52,7 +52,7 @@ const getAllInfo = async () => {
 //?En esta ruta tengo hecho el llamado por query y la ruta que me trae todo
 router.get("/countries", async (req, res) => {
   const { name } = req.query;
-  const info = await getAllInfo();
+  const info = await getInfoApi();
   try {
     //? Compruebo si la base de datos esta llena
     let db = await Country.findAll();

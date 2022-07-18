@@ -1,0 +1,23 @@
+.containerDetail{ 
+    display: grid;
+    grid-template-columns: repeat(3, 33.33%);
+    grid-template-rows: repeat(3, 33.3%);
+    border-radius: 10px;
+    margin: 5px;
+    background-color: rgba(255, 255, 255, 0.123);
+    
+
+    
+}
+.containerDetail:hover{
+    cursor: pointer;
+    filter: opacity(65%)
+}
+.div2 { 
+    grid-area: 1 / 1 / 4 / 4; 
+    margin: 0 auto;
+}
+.div2 h1, h3{ 
+    text-align: center;
+    color:rgb(255, 255, 255);
+}

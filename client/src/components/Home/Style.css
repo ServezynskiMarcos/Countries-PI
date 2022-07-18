@@ -1,12 +1,35 @@
-.parent {
-display: grid;
-grid-template-areas:
-    'header header header'
-    'main main main'
-    'footer footer footer ';
+body{
+    background-image: url(./night.jpg);
+    background-size: cover;
 }
-.div1 { grid-area: header; background-color: whitesmoke;}
-.div2 { grid-area: main;}
-.div3 { grid-area: 3 / 2 / 4 / 5; }
-.div4 { grid-area: 4 / 2 / 5 / 5; }
-
+h1{
+    color: #fff;
+}
+.container {
+    display: grid;
+    text-align: center;
+}
+    
+.div1 { 
+    grid-area: 1 / 1 / 1 / 4; 
+   
+    margin-bottom:5%;
+} 
+.left {
+    float: left;
+    
+  }
+.center {
+    margin: 0 auto;
+    display: inline-block;
+  }
+.right {
+    float: right;
+  }
+.form{ 
+    width: 100%;
+}
+label{
+    color:#fff;
+}
+    

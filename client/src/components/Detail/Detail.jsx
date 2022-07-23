@@ -1,17 +1,18 @@
-import React from 'react'
-//import { Link } from 'react-router-dom';
-import './Style.css'
+import React from "react";
+import "./Style.css";
+import { Link } from "react-router-dom";
 const Detail = (props) => {
   return (
-    <div className='containerDetail'>
-      <div className='div2'>
-      <h1>{props.name}</h1>
-      <img src={props.img} alt={props.name}/>
-      <h3>{props.continent}</h3>
+    <Link style={{ textDecoration: "none" }} to={"/countries/" + props.id}>
+      <div className="containerDetail">
+        <div className="div2">
+          <h1>{props.name}</h1>
+          <img src={props.img} alt={props.name} />
+          <h3>{props.continent}</h3>
+        </div>
       </div>
-    </div>
-  
-  )
-}
+    </Link>
+  );
+};
 
-export default Detail
+export default Detail;

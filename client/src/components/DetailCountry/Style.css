@@ -1,0 +1,41 @@
+.countryDetail {
+  border-radius: 10px;
+  background-color: rgba(32, 33, 33, 0.453);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  font-family: helvetica, arial, sans-serif;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 40%;
+  margin: auto;
+  height: min-content;
+}
+
+img {
+  border-radius: 10px;
+}
+.countryDetail .contenido {
+  color: white;
+}
+.contenido h1{
+  color: rgb(255, 255, 255);
+  margin-left: 10%;
+}
+.contenido .bac {
+  float: right;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  font-size: 20px;
+  background-color: red;
+  color: white;
+  margin-right: 10px;
+}
+.bac:hover{
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+}

@@ -27,6 +27,18 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      population: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      subregion: {
+        type: DataTypes.STRING,
+        
+      },
+      area: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       // createdInDb: {
       //   type: DataTypes.BOOLEAN,
       //   allowNull: false,

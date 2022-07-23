@@ -1,64 +1,80 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCountries, filterCountryByContinent, orderByName, orderByPopulation} from "../../redux/actions";
+import {
+  getCountries,
+  filterCountryByContinent,
+  orderByName,
+  orderByPopulation,
+  getSearchName,
+} from "../../redux/actions";
 //import { Link } from "react-router-dom";
 import Detail from "../Detail/Detail";
 import "./Style.css";
 import Pagination from "../Pagination/Pagination";
 import logo from "./lg.png";
+import { Link } from "react-router-dom";
+import Loading from "../Loading/Loading";
 const Home = () => {
   const dispatch = useDispatch();
-  const allCountries = useSelector((state) => state.countries); //?me traigo todo lo que tengo en el estado
+  const allCountries = useSelector((state) => state.countries); // me traigo todo lo que tengo en el estado
   const [currentPage, setCurrentPage] = useState(1);
+  const [inputText, setInputText] = useState("");
   const [orden, setOrden] = useState("");
-  const [ordenPoblation, setOrdenPoblation] = useState(""); //? Seteo en 1 pq quiero que mi pagina siempre arranque desde la pagina 1
-  const [countriesPerPage, setCountriesPerPage] = useState(9); //? aca le digo cuantos paises quiero tener por pag.
-  const indexOfLastCountry = currentPage * countriesPerPage; // 9 //? indice currentPage = 1 * cPerPage = 9===9
-  const indexOfFirstCountry = indexOfLastCountry - countriesPerPage; // 0 //? indice del ultimo pais - la cantidad de paises por pagina
+  const [ordenPoblation, setOrdenPoblation] = useState(""); // Seteo en 1 pq quiero que mi pagina siempre arranque desde la pagina 1
+  const [countriesPerPage, setCountriesPerPage] = useState(9); // aca le digo cuantos paises quiero tener por pag.
+  const indexOfLastCountry = currentPage * countriesPerPage;
+  const indexOfFirstCountry = indexOfLastCountry - countriesPerPage;
+  // 0 // indice del ultimo pais - la cantidad de paises por pagina
+  // 9 // indice currentPage = 1 * cPerPage = 9===9
+  // slice() devuelve una copia de una parte del array dentro de un nuevo array empezando por inicio hasta fin (fin no incluido). El array original no se modificará.
+  //slice extrae hasta, pero sin incluir el final
   const currentCountries = allCountries.slice(
-    indexOfFirstCountry,
-    indexOfLastCountry
+    indexOfFirstCountry, //0
+    indexOfLastCountry //9
   );
-  //?allCountries.slice(indexOfFirstCountry, indexOfLastCountry)
-  //!1------  Mi primer pais tiene indice 0 y el ultimo indice 9
-  //!2------  Mi primer pais tiene indice 10 y el ultimo indice 19
+  //allCountries.slice(indexOfFirstCountry, indexOfLastCountry)
+  //1------  Mi primer pais tiene indice 0 y el ultimo indice 9
+  //2------  Mi primer pais tiene indice 10 y el ultimo indice 19
 
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
+  // useEffect se ejecuta después del primer renderizado y después de cada actualización, cada vez que el DOM renderiza o actualiza, useEffect ejecuta un dispatch de la action que me trae todos los paises de la API.
   useEffect(() => {
     dispatch(getCountries());
-  },[dispatch]);
+  }, [dispatch]);
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   dispatch(getCountries(inputText));
-  // };
+  const inputHandler = (e) => {
+    e.preventDefault();
+    setInputText(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(getSearchName(inputText));
+    e.target.reset();
+  };
 
-  // const inputHandler = (e) => {
-  //   setInputText(e.target.value);
-  // };
   const handleFilterContinent = (e) => {
     //console.log(e.target.value);
     dispatch(filterCountryByContinent(e.target.value));
-  }
+  };
 
   const handleSort = (e) => {
     e.preventDefault(e);
     dispatch(orderByName(e.target.value));
     setCurrentPage(1);
-    setOrden(`Ordenado ${e.target.value}`)
-  }
+    setOrden(`Ordenado ${e.target.value}`);
+  };
   const handleSortPopulation = (e) => {
     e.preventDefault(e);
     dispatch(orderByPopulation(e.target.value));
     setCurrentPage(1);
-    setOrdenPoblation(`Ordenado ${e.target.value}`)
-
-  }
+    setOrdenPoblation(`Ordenado ${e.target.value}`);
+  };
   return (
+    <>
+    {currentCountries.length ?
     <div className="container">
       <div className="div1">
         <img src={logo} alt="logo"></img>
@@ -68,8 +84,10 @@ const Home = () => {
               CONTINENT
               <br></br>
               <hr />
-              <select onChange={e => handleFilterContinent(e)}>
-                <option value="" selected disabled hidden>Choose here</option>
+              <select onChange={(e) => handleFilterContinent(e)}>
+                <option value="" selected disabled hidden>
+                  Choose here
+                </option>
                 <option value="All">All</option>
                 <option value="North America">North America</option>
                 <option value="South America">South America</option>
@@ -78,7 +96,6 @@ const Home = () => {
                 <option value="Asia">Asia</option>
                 <option value="Antarctica">Antarctica</option>
                 <option value="Oceania">Oceania</option>
-
               </select>
             </label>
           </div>
@@ -87,8 +104,10 @@ const Home = () => {
               NAME ALPHABETICALLY
               <br></br>
               <hr />
-              <select onChange={e => handleSort(e)}>
-                <option value="" selected disabled hidden>Choose here</option>
+              <select onChange={(e) => handleSort(e)}>
+                <option value="" selected disabled hidden>
+                  Choose here
+                </option>
                 <option value="asc">Order A</option>
                 <option value="des">Order Z</option>
               </select>
@@ -99,8 +118,10 @@ const Home = () => {
               POPULATION
               <br></br>
               <hr />
-              <select onChange={e => handleSortPopulation(e)}>
-                <option value="" selected disabled hidden>Choose here</option>
+              <select onChange={(e) => handleSortPopulation(e)}>
+                <option value="" selected disabled hidden>
+                  Choose here
+                </option>
                 <option value="asc">Lower Population</option>
                 <option value="des">Higher Population</option>
               </select>
@@ -113,21 +134,39 @@ const Home = () => {
           allCountries={allCountries.length}
           paginado={paginado}
         />
-
-        <div className="search">
-          <input
-            name="name"
-            type="text"
-            // onChange={(e) => inputHandler(e)}
-          ></input>
-          <input type="submit"></input>
+        {/* //!SEARCH BAR */}
+        <div>
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <input
+              className="search"
+              placeholder="Search..."
+              name="name"
+              type="text"
+              onChange={(e) => inputHandler(e)}
+            ></input>
+            <input type="submit" className="btn"></input>
+          </form>
         </div>
+        {/* //!SEARCH BAR */}
+        <Link to="/activities">
+                <button type="button" className='buttonActivity'>create new activity</button>
+        </Link>
       </div>
+
       {currentCountries &&
         currentCountries.map((e) => {
-          return <Detail name={e.name} img={e.img} continent={e.continent} />;
+          return (
+            <Detail
+              name={e.name}
+              img={e.img}
+              continent={e.continent}
+              id={e.id}
+            />
+          );
         })}
     </div>
+    : <Loading/>}
+    </>
   );
 };
 export default Home;

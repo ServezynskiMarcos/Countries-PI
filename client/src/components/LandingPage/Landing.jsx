@@ -1,22 +1,21 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
-import './Style.css'
-import sample from './sample.mp4';
-const Landing= () => {
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Style.css";
+const Landing = () => {
   return (
-    <div className="Landing">
-    <div className="nav">
-      <h1>Countries</h1>
-      <Link to='/countries'>
-        <button>Go Home</button>
-      </Link>
+    <div className="landing">
+      <div className="content">
+        <h1>WELCOME</h1>
+        <Link to="/countries">
+          <div className="box-1">
+            <div className="bt btn-one">
+              <span>INGRESAR</span>
+            </div>
+          </div>
+        </Link>
+      </div>
     </div>
-      
-      <video className='videoTag' autoPlay loop muted>
-        <source src={sample} type='video/mp4' />
-      </video>
-    </div>
-  )
-}
+  );
+};
 
-export default Landing
+export default Landing;

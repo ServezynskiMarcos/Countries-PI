@@ -1,6 +1,8 @@
 const initialState = {
   countries: [],
   allCountries: [],
+  countryDetail: [],
+  activities: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -49,35 +51,45 @@ function rootReducer(state = initialState, action) {
         countries: sortedArr,
       };
     case "ORDER_BY_POPULATION":
-      const orderPopulation = action.payload === "asc" ? state.countries.sort(function(a, b){
-        if(a.population > b.population) {
-          return 1;
-        }
-        if (b.population > a.population){
-          return -1;
-        }
-        return 0;
-      })
-      : state.countries.sort(function(a, b){
-        if(a.population > b.population) {
-          return -1;
-        }
-        if (b.population > a.population){
-          return 1;
-        }
-        return 0;
-      });
-      return{
+      const orderPopulation =
+        action.payload === "asc"
+          ? state.countries.sort(function (a, b) {
+              if (a.population > b.population) {
+                return 1;
+              }
+              if (b.population > a.population) {
+                return -1;
+              }
+              return 0;
+            })
+          : state.countries.sort(function (a, b) {
+              if (a.population > b.population) {
+                return -1;
+              }
+              if (b.population > a.population) {
+                return 1;
+              }
+              return 0;
+            });
+      return {
         ...state,
-        countries: orderPopulation
-
-
-      }
-    // case "GET_COUNTRIES_BY_ID":
-    //   return {
-    //     ...state,
-    //     countries: action.payload,
-    //   };
+        countries: orderPopulation,
+      };
+    case "GET_SEARCH_NAME":
+      return {
+        ...state,
+        countries: action.payload,
+      };
+    case "GET_COUNTRIES_BY_ID":
+      return {
+        ...state,
+        countryDetail: action.payload,
+      };
+    case "POST_ACTIVITY":
+      return {
+        ...state,
+        activities: [...state.activities, action.payload]
+      };
 
     default:
       return { ...state };

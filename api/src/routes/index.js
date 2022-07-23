@@ -2,7 +2,6 @@ const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 const axios = require("axios");
-const { Op } = require("sequelize");
 const { Country, Activity, Country_Activity } = require("../db.js");
 
 const router = Router();
@@ -35,7 +34,7 @@ const getInfoDb = async () => {
   return await Country.findAll({
     include: {
       model: Activity,
-      attributes: ["name"],
+      attributes: ["name", "difficulty", "duration", "season"],
       through: {
         attributes: [],
       },
@@ -106,6 +105,7 @@ router.post("/activities", async (req, res) => {
     difficulty,
     duration,
     season,
+    country,
   });
   //?Busco en mi modelo de Country el pais que me llega por body
   const countryDB = await Country.findAll({
@@ -115,7 +115,7 @@ router.post("/activities", async (req, res) => {
     },
   });
   //?creo la actividad y la agrego al pais matcheado por el name
-  console.log("este es el pais", countryDB);
+  //console.log("este es el pais", countryDB);
   activitiesCreate.addCountry(countryDB);
   res.status(200).send("Activity succesfully created");
 });

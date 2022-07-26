@@ -1,4 +1,4 @@
-import { getCountryById } from "../../redux/actions";
+import { getCountryById, clear } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { useEffect } from "react";
@@ -11,39 +11,56 @@ const DetailCountry = () => {
 
   useEffect(() => {
     dispatch(getCountryById(id));
+    return () => {
+      dispatch(clear());
+    };
   }, [dispatch, id]);
 
   const oneCountry = useSelector((state) => state.countryDetail);
   //console.log('HOLAAAAAAAAAAAAAAAAAAA',oneCountry)
   return (
-  
-      <div className="countryDetail">
-      
-        {oneCountry.map((el) => {
-          return (
-            <div className="contenido">
-            <Link to="/countries">
-                <button type="button" className="bac">x</button>
+    <div className="countryDetail">
+      {oneCountry.map((el) => {
+        return (
+          <div className="contenido" key={el.id}>
+            <a href="/countries">
+              <button type="button" className="bac">
+                x
+              </button>
+            </a>
+            <h1>{el.name} Details</h1>
+
+            <hr />
+            <img src={el.img} alt="Country Flag" />
+            <p>Capital: {el.capital}</p>
+            <p>Population: {el.population}</p>
+            <p>Continent: {el.continent}</p>
+            <p>Subcontinent: {el.subregion}</p>
+            <p>Area: KM2 {el.area}</p>
+            {el.activities.length > 0 ? (
+              <p>Activities: </p>
+            ) : (
+              <Link to="/activities">
+                <p style={{ color: "red", textTransform: "uppercase" }}>
+                  {el.name} does not have an activity created
+                </p>
               </Link>
-              <h1>{el.name} Details</h1>
-              
-              <hr/>
-              <img src={el.img} alt="Country Flag" />
-              <p>Capital: {el.capital}</p>
-              <p>Population: {el.population}</p>
-              <p>Continent: {el.continent}</p>
-              <p>Subcontinent: {el.subregion}</p>
-              <p>Area: KM2 {el.area}</p>
-              {el.activities &&
-                el.activities.map((e) => {
-                  return <p>Activities: {e.name}</p>;
-                })}
-            </div>
-          );
-        })}
-        
-      </div>
-    
+            )}
+            {el.activities &&
+              el.activities.map((e) => {
+                return (
+                  <select className= "listAct">
+                    <option>{e.name}</option>
+                    <option disabled>Season: {e.season}</option>
+                    <option disabled>Difficulty: {e.difficulty}</option>
+                    <option disabled>Duration: {e.duration}</option>
+                  </select>
+                );
+              })}
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

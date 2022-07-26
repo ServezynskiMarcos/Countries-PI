@@ -32,7 +32,7 @@
   border-top:3px solid #ffc400;
   border-right:3px solid #ffc400;
   border-radius:50%;
-  animation:animateC 1.5s linear infinite;
+  animation:animateC 1.3s linear infinite;
 }
 .punto
 {
@@ -44,7 +44,7 @@
   height:4px;
   background:transparent;
   transform-origin:left;
-  animation:animate 1.5s linear infinite;
+  animation:animate 1.3s linear infinite;
 }
 .punto:before
 {

@@ -39,3 +39,21 @@ img {
     cursor: pointer;
     color: rgb(0, 0, 0);
 }
+a{
+  text-decoration: none;
+}
+
+.listAct{
+  text-align: center;
+  font-size:20px;
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin:5px;
+  
+  
+  
+  
+}

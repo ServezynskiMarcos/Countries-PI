@@ -64,11 +64,20 @@ router.get("/countries", async (req, res) => {
         e.name.toLowerCase().includes(name.toLowerCase())
       );
       query.length
-        ? res.status(200).send(query)//?si encontró un pais, me lo devuelve
-        : res.status(404).send("Country not found");//?si no encontró un pais, error
+        ? res.status(200).send(query) //?si encontró un pais, me lo devuelve
+        : res.status(404).send("Country not found"); //?si no encontró un pais, error
     } else {
       //? Si no hay query, traeme todo
-      res.status(200).send(info);
+      const all = await Country.findAll({
+        include: {
+          model: Activity,
+          attributes: ["name", "difficulty", "duration", "season"],
+          through: {
+            attributes: [],
+          },
+        },
+      });
+      res.status(200).json(all);
     }
   } catch (e) {
     console.log(e);
@@ -95,6 +104,19 @@ router.get("/countries/:id", async (req, res) => {
       : res.status(404).send("Country not found");
   }
 });
+router.get("/activities", async (req, res) => {
+  const activities = await Activity.findAll({
+    include: {
+      model: Country,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
+    },
+  });
+
+  res.status(200).json(activities);
+});
 
 router.post("/activities", async (req, res) => {
   //?a todo esto me lo traigo del body
@@ -105,7 +127,6 @@ router.post("/activities", async (req, res) => {
     difficulty,
     duration,
     season,
-    country,
   });
   //?Busco en mi modelo de Country el pais que me llega por body
   const countryDB = await Country.findAll({
@@ -116,7 +137,7 @@ router.post("/activities", async (req, res) => {
   });
   //?creo la actividad y la agrego al pais matcheado por el name
   //console.log("este es el pais", countryDB);
-  activitiesCreate.addCountry(countryDB);
+  return activitiesCreate.addCountry(countryDB);
   res.status(200).send("Activity succesfully created");
 });
 module.exports = router;

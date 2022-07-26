@@ -7,6 +7,8 @@ import {
   orderByName,
   orderByPopulation,
   getSearchName,
+  getActivity,
+  filterActivity,
 } from "../../redux/actions";
 //import { Link } from "react-router-dom";
 import Detail from "../Detail/Detail";
@@ -18,6 +20,7 @@ import Loading from "../Loading/Loading";
 const Home = () => {
   const dispatch = useDispatch();
   const allCountries = useSelector((state) => state.countries); // me traigo todo lo que tengo en el estado
+  const allActivities = useSelector((state) => state.activities);
   const [currentPage, setCurrentPage] = useState(1);
   const [inputText, setInputText] = useState("");
   const [orden, setOrden] = useState("");
@@ -43,6 +46,7 @@ const Home = () => {
   // useEffect se ejecuta después del primer renderizado y después de cada actualización, cada vez que el DOM renderiza o actualiza, useEffect ejecuta un dispatch de la action que me trae todos los paises de la API.
   useEffect(() => {
     dispatch(getCountries());
+    dispatch(getActivity());
   }, [dispatch]);
 
   const inputHandler = (e) => {
@@ -72,100 +76,127 @@ const Home = () => {
     setCurrentPage(1);
     setOrdenPoblation(`Ordenado ${e.target.value}`);
   };
+  const handleActivity=(e)=>{
+    e.preventDefault(e);
+    dispatch(filterActivity(e.target.value));
+  }
   return (
     <>
-    {currentCountries.length ?
-    <div className="container">
-      <div className="div1">
-        <img src={logo} alt="logo"></img>
-        <form className="form">
-          <div className="left">
-            <label>
-              CONTINENT
-              <br></br>
-              <hr />
-              <select onChange={(e) => handleFilterContinent(e)}>
-                <option value="" selected disabled hidden>
-                  Choose here
-                </option>
-                <option value="All">All</option>
-                <option value="North America">North America</option>
-                <option value="South America">South America</option>
-                <option value="Europe">Europe</option>
-                <option value="Africa">Africa</option>
-                <option value="Asia">Asia</option>
-                <option value="Antarctica">Antarctica</option>
-                <option value="Oceania">Oceania</option>
-              </select>
-            </label>
-          </div>
-          <div className="center">
-            <label>
-              NAME ALPHABETICALLY
-              <br></br>
-              <hr />
-              <select onChange={(e) => handleSort(e)}>
-                <option value="" selected disabled hidden>
-                  Choose here
-                </option>
-                <option value="asc">Order A</option>
-                <option value="des">Order Z</option>
-              </select>
-            </label>
-          </div>
-          <div className="right">
-            <label>
-              POPULATION
-              <br></br>
-              <hr />
-              <select onChange={(e) => handleSortPopulation(e)}>
-                <option value="" selected disabled hidden>
-                  Choose here
-                </option>
-                <option value="asc">Lower Population</option>
-                <option value="des">Higher Population</option>
-              </select>
-            </label>
-          </div>
-        </form>
+      {currentCountries.length ? (
+        <div className="container">
+          <div className="div1">
+            <img src={logo} alt="logo"></img>
+            <form className="form">
+              <div className="left">
+                <label>
+                  CONTINENT
+                  <br></br>
+                  <hr />
+                  <select
+                    defaultValue={"DEFAULT"}
+                    onChange={(e) => handleFilterContinent(e)}
+                  >
+                    <option value="DEFAULT" disabled>Choose</option>
+                    <option value="All">All</option>
+                    <option value="North America">North America</option>
+                    <option value="South America">South America</option>
+                    <option value="Europe">Europe</option>
+                    <option value="Africa">Africa</option>
+                    <option value="Asia">Asia</option>
+                    <option value="Antarctica">Antarctica</option>
+                    <option value="Oceania">Oceania</option>
+                  </select>
+                </label>
+              </div>
+              <div className="center">
+                <label>
+                  NAME ALPHABETICALLY
+                  <br></br>
+                  <hr />
+                  <select
+                    defaultValue={"DEFAULT"}
+                    onChange={(e) => handleSort(e)}
+                  >
+                    <option value="DEFAULT" disabled>
+                      Choose
+                    </option>
+                    <option value="asc">Order A</option>
+                    <option value="des">Order Z</option>
+                  </select>
+                </label>
+                <label className="center2">
+                  ACTIVITIES
+                  <br></br>
+                  <hr />
+                  <select onChange={(e) => handleActivity(e)}>
+                    {allActivities &&
+                      allActivities.map((e) => {
+                        return <option key={e.id}>{e.name}</option>;
+                      })}
+                  </select>
+                </label>
+              </div>
+              <div className="right">
+                <label>
+                  POPULATION
+                  <br></br>
+                  <hr />
+                  <select
+                    defaultValue={"DEFAULT"}
+                    onChange={(e) => handleSortPopulation(e)}
+                  >
+                    <option value="DEFAULT" disabled>
+                      Choose
+                    </option>
+                    <option value="asc">Lower Population</option>
+                    <option value="des">Higher Population</option>
+                  </select>
+                </label>
+              </div>
+            </form>
 
-        <Pagination
-          countriesPerPage={countriesPerPage}
-          allCountries={allCountries.length}
-          paginado={paginado}
-        />
-        {/* //!SEARCH BAR */}
-        <div>
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <input
-              className="search"
-              placeholder="Search..."
-              name="name"
-              type="text"
-              onChange={(e) => inputHandler(e)}
-            ></input>
-            <input type="submit" className="btn"></input>
-          </form>
-        </div>
-        {/* //!SEARCH BAR */}
-        <Link to="/activities">
-                <button type="button" className='buttonActivity'>create new activity</button>
-        </Link>
-      </div>
-
-      {currentCountries &&
-        currentCountries.map((e) => {
-          return (
-            <Detail
-              name={e.name}
-              img={e.img}
-              continent={e.continent}
-              id={e.id}
+            <Pagination
+              countriesPerPage={countriesPerPage}
+              allCountries={allCountries.length}
+              paginado={paginado}
             />
-          );
-        })}
-    </div>
-    : <Loading/>}
+            {/* //!SEARCH BAR */}
+            <div>
+              <form onSubmit={(e) => handleSubmit(e)}>
+                <input
+                  className="search"
+                  placeholder="Search..."
+                  name="name"
+                  type="text"
+                  onChange={(e) => inputHandler(e)}
+                ></input>
+                <input type="submit" className="btn"></input>
+              </form>
+            </div>
+            {/* //!SEARCH BAR */}
+            <Link to="/activities">
+              <button type="button" className="buttonActivity">
+                create new activity
+              </button>
+            </Link>
+          </div>
+
+          {currentCountries &&
+            currentCountries.map((e) => {
+              return (
+                <Detail
+                  key={e.id}
+                  name={e.name}
+                  img={e.img}
+                  continent={e.continent}
+                  id={e.id}
+                />
+              );
+            })}
+        </div>
+      ) : (
+        <Loading />
+      )}
     </>
   );
 };

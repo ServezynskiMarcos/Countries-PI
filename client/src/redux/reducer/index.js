@@ -88,9 +88,28 @@ function rootReducer(state = initialState, action) {
     case "POST_ACTIVITY":
       return {
         ...state,
-        activities: [...state.activities, action.payload]
+        activities: [...state.activities, action.payload],
       };
-
+    case "GET_ACTIVITY":
+      return {
+        ...state,
+        activities: action.payload,
+      };
+    case "FILTER_ACTIVITY":
+      const all = state.allCountries;
+      const filter = all.filter((c) => {
+        let countryAct = c.activities.map((e) => e.name);
+        return countryAct.includes(action.payload) ? c : null;
+      });
+      return {
+        ...state,
+        countries: filter,
+      };
+    case "CLEAR":
+      return {
+        ...state,
+        countryDetail: null,
+      };
     default:
       return { ...state };
   }

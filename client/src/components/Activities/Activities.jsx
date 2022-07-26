@@ -41,19 +41,21 @@ const Activities = () => {
 
   return (
     <div className="activitiesContainer">
-        
       <div className="divcont">
         <label className="tittle">ACTIVITY</label>
         <Link to="/countries">
-              <button type="button" className="back">x</button>
-          </Link>
-        <hr/>
+          <button type="button" className="back">
+            x
+          </button>
+        </Link>
+        <hr />
         <form>
           <label>Activity name</label>
           <div>
             <input
               type="text"
               name="name"
+              placeholder="enter text"
               value={newActivity.name}
               onChange={handleChange}
             ></input>
@@ -63,9 +65,13 @@ const Activities = () => {
           <div>
             <select
               name="difficulty"
-              value={newActivity.difficulty}
+              //value={newActivity.difficulty}
               onChange={handleChange}
+              defaultValue={"DEFAULT"}
             >
+              <option value="DEFAULT" disabled>
+                select...
+              </option>
               <option value="1">1 🟩</option>
               <option value="2">2 🟩</option>
               <option value="3">3 🟨</option>
@@ -78,9 +84,13 @@ const Activities = () => {
           <div>
             <select
               name="duration"
-              value={newActivity.duration}
+              //value={newActivity.duration}
               onChange={handleChange}
+              defaultValue={"DEFAULT"}
             >
+              <option value="DEFAULT" disabled>
+                select...
+              </option>
               <option value="1">1 Hour</option>
               <option value="2">2 Hours</option>
               <option value="3">3 Hours</option>
@@ -92,9 +102,13 @@ const Activities = () => {
           <div>
             <select
               name="season"
-              value={newActivity.season}
+              //value={newActivity.season}
               onChange={handleChange}
+              defaultValue={"DEFAULT"}
             >
+              <option value="DEFAULT" disabled>
+                select...
+              </option>
               <option value="Primavera">Spring 🌸</option>
               <option value="Verano">Summer ☀️</option>
               <option value="Otoño">Autumn 🍂</option>
@@ -105,12 +119,16 @@ const Activities = () => {
           <div>
             <select
               name="country"
-              value={newActivity.country}
+              // value={newActivity.country}
               onChange={handleChange}
+              defaultValue={"DEFAULT"}
             >
+              <option value="DEFAULT" disabled>
+                select...
+              </option>
               {allountries &&
                 allountries.map((e) => {
-                  return <option>{e.name}</option>;
+                  return <option key={e.id}>{e.name}</option>;
                 })}
             </select>
           </div>
@@ -118,7 +136,6 @@ const Activities = () => {
           <button type="submit" onClick={handleSubmit}>
             ✅
           </button>
-          
         </form>
       </div>
     </div>

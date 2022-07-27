@@ -25,7 +25,7 @@ const Home = () => {
   const [inputText, setInputText] = useState("");
   const [orden, setOrden] = useState("");
   const [ordenPoblation, setOrdenPoblation] = useState(""); // Seteo en 1 pq quiero que mi pagina siempre arranque desde la pagina 1
-  const [countriesPerPage, setCountriesPerPage] = useState(9); // aca le digo cuantos paises quiero tener por pag.
+  const [countriesPerPage, setCountriesPerPage] = useState(10); // aca le digo cuantos paises quiero tener por pag.
   const indexOfLastCountry = currentPage * countriesPerPage;
   const indexOfFirstCountry = indexOfLastCountry - countriesPerPage;
   // 0 // indice del ultimo pais - la cantidad de paises por pagina
@@ -76,89 +76,87 @@ const Home = () => {
     setCurrentPage(1);
     setOrdenPoblation(`Ordenado ${e.target.value}`);
   };
-  const handleActivity=(e)=>{
+  const handleActivity = (e) => {
     e.preventDefault(e);
     dispatch(filterActivity(e.target.value));
-  }
+  };
   return (
     <>
       {currentCountries.length ? (
         <div className="container">
           <div className="div1">
-            <img src={logo} alt="logo"></img>
+            <a href="/countries">
+              <img src={logo} alt="logo"></img>
+            </a>
             <form className="form">
-              <div className="left">
-                <label>
-                  CONTINENT
-                  <br></br>
-                  <hr />
-                  <select
-                    defaultValue={"DEFAULT"}
-                    onChange={(e) => handleFilterContinent(e)}
-                  >
-                    <option value="DEFAULT" disabled>Choose</option>
-                    <option value="All">All</option>
-                    <option value="North America">North America</option>
-                    <option value="South America">South America</option>
-                    <option value="Europe">Europe</option>
-                    <option value="Africa">Africa</option>
-                    <option value="Asia">Asia</option>
-                    <option value="Antarctica">Antarctica</option>
-                    <option value="Oceania">Oceania</option>
-                  </select>
-                </label>
-              </div>
-              <div className="center">
-                <label>
-                  NAME ALPHABETICALLY
-                  <br></br>
-                  <hr />
-                  <select
-                    defaultValue={"DEFAULT"}
-                    onChange={(e) => handleSort(e)}
-                  >
-                    <option value="DEFAULT" disabled>
-                      Choose
-                    </option>
-                    <option value="asc">Order A</option>
-                    <option value="des">Order Z</option>
-                  </select>
-                </label>
-                <label className="center2">
-                  ACTIVITIES
-                  <br></br>
-                  <hr />
-                  <select onChange={(e) => handleActivity(e)}>
-                    {allActivities &&
-                      allActivities.map((e) => {
-                        return <option key={e.id}>{e.name}</option>;
-                      })}
-                  </select>
-                </label>
-              </div>
-              <div className="right">
-                <label>
-                  POPULATION
-                  <br></br>
-                  <hr />
-                  <select
-                    defaultValue={"DEFAULT"}
-                    onChange={(e) => handleSortPopulation(e)}
-                  >
-                    <option value="DEFAULT" disabled>
-                      Choose
-                    </option>
-                    <option value="asc">Lower Population</option>
-                    <option value="des">Higher Population</option>
-                  </select>
-                </label>
-              </div>
+              <label>
+                CONTINENT
+                <br></br>
+                <select
+                  defaultValue={"DEFAULT"}
+                  onChange={(e) => handleFilterContinent(e)}
+                >
+                  <option value="DEFAULT" disabled>
+                    Choose
+                  </option>
+                  <option value="All">All</option>
+                  <option value="North America">North America</option>
+                  <option value="South America">South America</option>
+                  <option value="Europe">Europe</option>
+                  <option value="Africa">Africa</option>
+                  <option value="Asia">Asia</option>
+                  <option value="Antarctica">Antarctica</option>
+                  <option value="Oceania">Oceania</option>
+                </select>
+              </label>
+
+              <label>
+                NAME ALPHABETICALLY
+                <br></br>
+                <select
+                  defaultValue={"DEFAULT"}
+                  onChange={(e) => handleSort(e)}
+                >
+                  <option value="DEFAULT" disabled>
+                    Choose
+                  </option>
+                  <option value="asc">Order A</option>
+                  <option value="des">Order Z</option>
+                </select>
+              </label>
+              <label>
+                ACTIVITIES
+                <br></br>
+                <select onChange={(e) => handleActivity(e)}>
+                  {allActivities &&
+                    allActivities.map((e) => {
+                      return <option key={e.id}>{e.name}</option>;
+                    })}
+                </select>
+              </label>
+
+              <label>
+                POPULATION
+                <br></br>
+                <select
+                  defaultValue={"DEFAULT"}
+                  onChange={(e) => handleSortPopulation(e)}
+                >
+                  <option value="DEFAULT" disabled>
+                    Choose
+                  </option>
+                  <option value="asc">Lower Population</option>
+                  <option value="des">Higher Population</option>
+                </select>
+              </label>
             </form>
 
             <Pagination
               countriesPerPage={countriesPerPage}
               allCountries={allCountries.length}
               paginado={paginado}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
             />
             {/* //!SEARCH BAR */}
             <div>
@@ -176,23 +174,25 @@ const Home = () => {
             {/* //!SEARCH BAR */}
             <Link to="/activities">
               <button type="button" className="buttonActivity">
-                create new activity
+                
               </button>
             </Link>
           </div>
 
-          {currentCountries &&
-            currentCountries.map((e) => {
-              return (
-                <Detail
-                  key={e.id}
-                  name={e.name}
-                  img={e.img}
-                  continent={e.continent}
-                  id={e.id}
-                />
-              );
-            })}
+          <div className="card">
+            {currentCountries &&
+              currentCountries.map((e) => {
+                return (
+                  <Detail
+                    key={e.id}
+                    name={e.name}
+                    img={e.img}
+                    continent={e.continent}
+                    id={e.id}
+                  />
+                );
+              })}
+          </div>
         </div>
       ) : (
         <Loading />

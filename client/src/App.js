@@ -7,6 +7,7 @@ import Landing from './components/LandingPage/Landing';
 function App() {
   return (
     <>
+      
       <Route exact path="/" component={Landing} />
       <Route exact path="/countries" component={Home} />
       <Route path='/countries/:id' component={DetailCountry} />

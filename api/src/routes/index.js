@@ -122,6 +122,7 @@ router.post("/activities", async (req, res) => {
   //?a todo esto me lo traigo del body
   const { name, difficulty, duration, season, country } = req.body;
   //?aca estoy creando un nuevo modelo de actividades
+  try{
   const activitiesCreate = await Activity.create({
     name,
     difficulty,
@@ -137,7 +138,9 @@ router.post("/activities", async (req, res) => {
   });
   //?creo la actividad y la agrego al pais matcheado por el name
   //console.log("este es el pais", countryDB);
-  return activitiesCreate.addCountry(countryDB);
-  res.status(200).send("Activity succesfully created");
+  return activitiesCreate.addCountry(countryDB);}
+  catch(error){
+    res.status(404).send(error);
+  }
 });
 module.exports = router;

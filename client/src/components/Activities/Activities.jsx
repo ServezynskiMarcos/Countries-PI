@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import { postActivity, getCountries } from "../../redux/actions";
 import "./Style.css";
 import { Link } from "react-router-dom";
+import validate from "./validation";
 const Activities = () => {
   const dispatch = useDispatch();
   const allountries = useSelector((state) => state.countries);
+  const [error, setError] = useState({ initial: false });
   const [newActivity, setNewActivity] = useState({
     name: "",
     difficulty: "",
@@ -19,24 +21,58 @@ const Activities = () => {
     dispatch(getCountries());
   }, [dispatch]);
 
+  const handleCountry = (e) => {
+    //e.preventDefault();
+    if (
+      e.target.value !== "select" &&
+      !newActivity.country.includes(e.target.value)
+    ) {
+      setNewActivity({
+        ...newActivity,
+        country: [...newActivity.country, e.target.value],
+      });
+    }
+  };
+
   const handleChange = (e) => {
     setNewActivity({
       ...newActivity,
       [e.target.name]: e.target.value,
     });
+    if (!error.initial) {
+      setError(
+        validate({
+          ...newActivity,
+          [e.target.name]: e.target.value,
+        })
+      );
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(postActivity(newActivity));
-    alert("Activity succesfully created");
-    setNewActivity({
-      name: "",
-      difficulty: "",
-      duration: "",
-      season: "",
-      country: [],
-    });
+    if (
+      newActivity.name &&
+      newActivity.difficulty &&
+      newActivity.duration &&
+      newActivity.season &&
+      newActivity.country.length >= 1
+    ) {
+      dispatch(postActivity(newActivity));
+      alert(`Activity succesfully created in: ${newActivity.country}`);
+      setNewActivity({
+        name: "",
+        difficulty: "",
+        duration: "",
+        season: "",
+        country: [],
+      });
+      error.initial = true;
+    }
+    if (!error.initial) {
+      alert("complete the required fields");
+      error.initial = false;
+    }
   };
 
   return (
@@ -50,17 +86,26 @@ const Activities = () => {
         </Link>
         <hr />
         <form>
-          <label>Activity name</label>
+          {error.name ? (
+            <label style={{ color: "red" }}>{error.name}</label>
+          ) : (
+            <label>Activity name</label>
+          )}
+
           <div>
             <input
               type="text"
               name="name"
               placeholder="enter text"
               value={newActivity.name}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
             ></input>
           </div>
-          <label>Difficulty</label>
+          {error.difficulty ? (
+            <label style={{ color: "red" }}>{error.difficulty}</label>
+          ) : (
+            <label>Difficulty</label>
+          )}
 
           <div>
             <select
@@ -79,13 +124,17 @@ const Activities = () => {
               <option value="5">5 🟥</option>
             </select>
           </div>
-          <label>Duration</label>
+          {error.duration ? (
+            <label style={{ color: "red" }}>{error.duration}</label>
+          ) : (
+            <label>Duration</label>
+          )}
 
           <div>
             <select
               name="duration"
               //value={newActivity.duration}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
               defaultValue={"DEFAULT"}
             >
               <option value="DEFAULT" disabled>
@@ -98,12 +147,16 @@ const Activities = () => {
               <option value="5">5 Hours</option>
             </select>
           </div>
-          <label>Season</label>
+          {error.season ? (
+            <label style={{ color: "red" }}>{error.season}</label>
+          ) : (
+            <label>Season</label>
+          )}
           <div>
             <select
               name="season"
               //value={newActivity.season}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
               defaultValue={"DEFAULT"}
             >
               <option value="DEFAULT" disabled>
@@ -115,25 +168,34 @@ const Activities = () => {
               <option value="Invierno">Winter ❄️</option>
             </select>
           </div>
-          <label>Country</label>
+          
+            <label>Country</label>
+          
           <div>
             <select
               name="country"
-              // value={newActivity.country}
-              onChange={handleChange}
               defaultValue={"DEFAULT"}
+              onChange={(e) => handleCountry(e)}
             >
               <option value="DEFAULT" disabled>
                 select...
               </option>
               {allountries &&
                 allountries.map((e) => {
-                  return <option key={e.id}>{e.name}</option>;
+                  return <option key={e.name}>{e.name}</option>;
                 })}
             </select>
           </div>
-
-          <button type="submit" onClick={handleSubmit}>
+          <div className="countryadd">
+            {newActivity.country && newActivity.country.map((e) => {
+              return(
+                <div key={e} className="addcountry">
+                <p>{e}</p>
+                </div>
+              )
+            })}
+          </div>
+          <button type="submit" onClick={(e) => handleSubmit(e)}>
             ✅
           </button>
         </form>

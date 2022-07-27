@@ -11,11 +11,11 @@
   left: 0;
   right: 0;
   width: 40%;
-  height: 65%;
+  height:85%;
   margin: auto;
   background-color: rgba(32, 33, 33, 0.453);
   backdrop-filter: blur(10px);
-  padding: 20px;
+  padding: 40px;
   font-family: helvetica, arial, sans-serif;
 }
 .divcont input {
@@ -25,19 +25,22 @@
   font-size: 25px;
   text-align: center;
   color: rgb(255, 255, 255);
+  margin-bottom: 5px;
 }
 .divcont select {
   font-size: 17px;
   text-align: center;
+  margin-bottom: 5px;
+
 }
 .divcont button {
-  background-color: rgba(255, 255, 255, 0.123);
+  background-color: rgba(2, 2, 2, 0.548);
   border: none;
   border-radius: 10px;
   color: rgb(255, 255, 255);
   font-size: 20px;
-  margin-top: 5px;
-  width: 100px;
+  margin-top: 25px;
+  width: 200px;
 }
 .divcont button:hover {
   color: rgb(0, 0, 0);
@@ -51,6 +54,7 @@ label {
   margin-left: 7%;
   color: rgb(255, 255, 255);
   font-family: helvetica, arial, sans-serif;
+  
 }
 .divcont .back {
   font-size: 20px;
@@ -62,4 +66,17 @@ label {
 }
 .divcont .back:hover {
   color: rgb(0, 0, 0);
+}
+.countryadd {
+  display: flex;
+  justify-content: space-between;
+  overflow: auto;
+}
+.addcountry p {
+  background-color: rgba(255, 255, 255, 0.123);
+  border-radius: 10px;
+  color: white;
+  padding: 10px;
+  margin-top: 5px;
+  margin: 1px;
 }

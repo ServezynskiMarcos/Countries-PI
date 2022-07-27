@@ -2,12 +2,11 @@
     list-style-type: none;
     display: flex;
     float: left;
-    width: 97%;
+    width: 90%;
     background-color: rgba(32, 33, 33, 0.453);
-
     border-radius:10px;
     justify-content: center;
-    margin-left: 10px;
+    margin-left: 55px;
     padding: 10px;
 }
 .pagination ul li{ 
@@ -22,4 +21,15 @@
 .pagination ul li::selection{
     color: rgb(255, 0, 0);
 
+}
+.btnPage{
+    background-color:transparent;
+    border: none;
+    color:white;
+    font-size: 25px;
+    margin:0 10px 5px 20px;
+}
+.btnPage:hover{
+    cursor: pointer;
+    color:black;
 }

@@ -10,10 +10,6 @@ const Pagination = ({
   currentPage,
 }) => {
   const pageNumbers = [];
-
-  //divide la cantidad de paises que hay en mi estado por la cantidad de paises que quiero mostrar en pantalla
-  //math.ceil me redondea hacia arriba el resultado de la division
-  //ese resultado lo pushea al array
   for (let i = 1; i <= Math.ceil(allCountries / countriesPerPage); i++) {
     pageNumbers.push(i);
   }

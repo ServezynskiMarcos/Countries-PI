@@ -11,7 +11,7 @@
   left: 0;
   right: 0;
   width: 40%;
-  height:85%;
+  height: 85%;
   margin: auto;
   background-color: rgba(32, 33, 33, 0.453);
   backdrop-filter: blur(10px);
@@ -31,7 +31,6 @@
   font-size: 17px;
   text-align: center;
   margin-bottom: 5px;
-
 }
 .divcont button {
   background-color: rgba(2, 2, 2, 0.548);
@@ -54,7 +53,6 @@ label {
   margin-left: 7%;
   color: rgb(255, 255, 255);
   font-family: helvetica, arial, sans-serif;
-  
 }
 .divcont .back {
   font-size: 20px;
@@ -73,10 +71,19 @@ label {
   overflow: auto;
 }
 .addcountry p {
+  color: white;
+  margin: 1px;
+}
+#delete {
+  font-size: 20px;
+  background-color: rgb(255, 0, 0);
+  width: 30px;
+  height: 30px;
+  margin: 0;
+}
+.actcar {
   background-color: rgba(255, 255, 255, 0.123);
   border-radius: 10px;
-  color: white;
-  padding: 10px;
-  margin-top: 5px;
-  margin: 1px;
+  padding: 15px;
+  margin: 2px;
 }

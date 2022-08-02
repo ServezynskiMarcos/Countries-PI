@@ -3,7 +3,6 @@ import axios from "axios";
 export function getCountries() {
   return async function (dispatch) {
     const json = await axios.get("http://localhost:3001/countries");
-    //si quiero hacer la llamada con fetch tengo que usar .then y no async await
     return dispatch({
       type: "GET_COUNTRIES",
       payload: json.data,
@@ -40,7 +39,7 @@ export function getSearchName(name) {
         payload: json.data,
       });
     } catch (err) {
-      alert('country not found');
+      alert("country not found");
     }
   };
 }
@@ -53,8 +52,8 @@ export function getCountryById(id) {
         payload: json.data,
       });
     } catch (err) {
-      alert('country not found');
-      return window.location.href ="http://localhost:3000/countries";
+      alert("country not found");
+      return (window.location.href = "http://localhost:3000/countries");
     }
   };
 }
@@ -67,7 +66,7 @@ export function postActivity(payload) {
     return dispatch({
       type: "POST_ACTIVITY",
       payload: json.data,
-    });
+    })
   };
 }
 
@@ -81,15 +80,10 @@ export function getActivity() {
   };
 }
 
-export function filterActivity(payload){
-  return{
+export function filterActivity(payload) {
+  return {
     type: "FILTER_ACTIVITY",
-    payload: payload
-  }
+    payload: payload,
+  };
 }
-export function clear(){
 
-  return{
-    type: "CLEAR",
-  }
-}

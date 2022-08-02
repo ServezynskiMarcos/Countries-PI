@@ -9,7 +9,7 @@ const Landing = () => {
         <Link to="/countries">
           <div className="box-1">
             <div className="bt btn-one">
-              <span>INGRESAR</span>
+              <span>ENTER THE WORLD</span>
             </div>
           </div>
         </Link>

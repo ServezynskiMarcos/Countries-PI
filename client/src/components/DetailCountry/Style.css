@@ -29,7 +29,7 @@ img {
   border: none;
   width: 30px;
   height: 30px;
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 20px;
   background-color: red;
   color: white;
@@ -52,8 +52,27 @@ a{
   left: 0;
   right: 0;
   margin:5px;
-  
-  
-  
-  
+}
+.del{
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  font-size: 15px;
+  background-color: red;
+  color: white;
+  border: none;
+  margin-left: 5px;
+}
+.del:hover{
+  cursor: pointer;
+}
+.acti{
+  margin-bottom: 0;
+}
+.delete{
+  display: flex;
+  justify-content: center;
+}
+input{
+  text-align: center;
 }

@@ -7,7 +7,6 @@ const Detail = (props) => {
       <div className="containerDetail">
         <div className="div2">
           <h1>{props.name}</h1>
-          
           <img src={props.img} alt={props.name} className="flags"/>
           <h3>{props.continent}</h3>
         </div>

@@ -50,29 +50,41 @@ const Activities = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     if (
       newActivity.name &&
       newActivity.difficulty &&
       newActivity.duration &&
       newActivity.season &&
-      newActivity.country.length >= 1
+      newActivity.country.length
     ) {
       dispatch(postActivity(newActivity));
       alert(`Activity succesfully created in: ${newActivity.country}`);
-      setNewActivity({
-        name: "",
-        difficulty: "",
-        duration: "",
-        season: "",
-        country: [],
-      });
       error.initial = true;
     }
     if (!error.initial) {
-      alert("complete the required fields");
+      e.preventDefault();
+      if (error.name) {
+        alert(`error: ${error.name}`);
+      }
+      if (error.duration) {
+        alert(`error: ${error.duration}`);
+      }
+      if (error.difficulty) {
+        alert(`error: ${error.difficulty}`);
+      }
+      if (error.countries) {
+        alert(`error: ${error.countries}`);
+      }
       error.initial = false;
     }
+  };
+
+  const deleteCountry = (e) => {
+    e.preventDefault();
+    setNewActivity({
+      ...newActivity,
+      country: newActivity.country.filter((c) => c !== e.target.name),
+    });
   };
 
   return (
@@ -99,6 +111,7 @@ const Activities = () => {
               placeholder="enter text"
               value={newActivity.name}
               onChange={(e) => handleChange(e)}
+              required
             ></input>
           </div>
           {error.difficulty ? (
@@ -168,9 +181,9 @@ const Activities = () => {
               <option value="Invierno">Winter ❄️</option>
             </select>
           </div>
-          
-            <label>Country</label>
-          
+
+          <label>Country</label>
+
           <div>
             <select
               name="country"
@@ -187,13 +200,24 @@ const Activities = () => {
             </select>
           </div>
           <div className="countryadd">
-            {newActivity.country && newActivity.country.map((e) => {
-              return(
-                <div key={e} className="addcountry">
-                <p>{e}</p>
-                </div>
-              )
-            })}
+            {newActivity.country &&
+              newActivity.country.map((e) => {
+                return (
+                  <div key={e} className="addcountry">
+                    <div className="actcar">
+                      <button
+                        type="button"
+                        id="delete"
+                        name={e}
+                        onClick={(e) => deleteCountry(e)}
+                      >
+                        x
+                      </button>
+                      <p>{e}</p>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
           <button type="submit" onClick={(e) => handleSubmit(e)}>
             ✅

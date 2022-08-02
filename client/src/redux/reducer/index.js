@@ -105,11 +105,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         countries: filter,
       };
-    case "CLEAR":
-      return {
-        ...state,
-        countryDetail: null,
-      };
     default:
       return { ...state };
   }

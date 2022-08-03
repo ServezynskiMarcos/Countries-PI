@@ -12,7 +12,9 @@ const DetailCountry = () => {
   useEffect(() => {
     dispatch(getCountryById(id));
   }, [dispatch, id]);
+  
   const oneCountry = useSelector((state) => state.countryDetail);
+  
   return (
     <div className="countryDetail">
       {oneCountry?.map((el) => {
@@ -57,7 +59,7 @@ const DetailCountry = () => {
             {el.activities &&
               el.activities.map((e) => {
                 return (
-                  <select className="listAct">
+                  <select className="listAct" key={e.id}>
                     <option>{e.name}</option>
                     <option disabled>Season: {e.season}</option>
                     <option disabled>Difficulty: {e.difficulty}</option>

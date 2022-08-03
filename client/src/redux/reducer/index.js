@@ -97,9 +97,9 @@ function rootReducer(state = initialState, action) {
       };
     case "FILTER_ACTIVITY":
       const all = state.allCountries;
-      const filter = all.filter((c) => {
-        let countryAct = c.activities.map((e) => e.name);
-        return countryAct.includes(action.payload) ? c : null;
+      const filter = all.filter((country) => {
+        let countryAct = country.activities.map((e) => e.name);
+        return countryAct.includes(action.payload) ? country : null;
       });
       return {
         ...state,
